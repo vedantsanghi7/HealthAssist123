@@ -11,21 +11,12 @@ import { supabase } from '@/lib/supabase/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 
 export default function PatientDashboard() {
-    const { user } = useAuth();
-    const [profile, setProfile] = useState<any>(null);
+    const { user, profile } = useAuth();
     const [recentRecords, setRecentRecords] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             if (!user) return;
-
-            // Fetch Profile
-            const { data: profileData } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
-            setProfile(profileData);
 
             // Fetch Recent Records
             const { data: records } = await supabase

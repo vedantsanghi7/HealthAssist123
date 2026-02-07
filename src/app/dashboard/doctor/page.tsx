@@ -12,22 +12,8 @@ import { supabase } from '@/lib/supabase/supabaseClient';
 import { Patient } from '@/lib/types';
 
 export default function DoctorDashboard() {
-    const { user } = useAuth();
+    const { user, profile: doctorProfile } = useAuth();
     const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
-    const [doctorProfile, setDoctorProfile] = useState<any>(null);
-
-    useEffect(() => {
-        const fetchProfile = async () => {
-            if (!user) return;
-            const { data } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
-            setDoctorProfile(data);
-        };
-        fetchProfile();
-    }, [user]);
 
     return (
         <div className="space-y-6 pb-20">

@@ -1,6 +1,7 @@
 -- 1. Update Profiles for Dual Roles
 alter table public.profiles
-add column if not exists roles jsonb default '["patient"]'::jsonb;
+add column if not exists roles jsonb default '["patient"]'::jsonb,
+add column if not exists is_onboarded boolean default false;
 
 -- 2. Update Medical Records for Doctor Uploads
 alter table public.medical_records

@@ -41,7 +41,8 @@ export default function OnboardingPage() {
             const updates: any = {
                 id: user.id,
                 full_name: formData.full_name,
-                updated_at: new Date().toISOString()
+                updated_at: new Date().toISOString(),
+                is_onboarded: true // Mark as onboarded
             };
 
             if (onboardingMode === 'doctor') {
@@ -70,15 +71,8 @@ export default function OnboardingPage() {
 
             console.log('Profile updated successfully');
 
-            // 4. Force context update / switch role
-            // Since we can't easily force-refresh AuthContext here without a reload or exposing a refresh method,
-            // we'll manually redirect and let the page load handle it, or use switchRole if available.
-
-            // If we just added a role, we might want to switch to it
-            switchRole(onboardingMode);
-
-            // Fallback redirect if switchRole doesn't trigger immediately (though it returns void)
-            // setTimeout(() => window.location.href = onboardingMode === 'doctor' ? '/dashboard/doctor' : '/dashboard/patient', 500);
+            // 4. Force hard redirect to ensure AuthContext refreshes with new data
+            window.location.href = onboardingMode === 'doctor' ? '/dashboard/doctor' : '/dashboard/patient';
 
         } catch (error) {
             console.error('Error updating profile:', error);

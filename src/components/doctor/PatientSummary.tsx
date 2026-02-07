@@ -83,5 +83,41 @@ export function PatientSummary({ patient }: PatientSummaryProps) {
                             </div>
                         </div>
                     </GlassCard>
-                    );
+                </div>
+
+                {/* Right: Records */}
+                <GlassCard className="p-6 flex flex-col">
+                    <h3 className="font-semibold mb-4 flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-medical-primary" />
+                        Medical Records
+                    </h3>
+                    <div className="flex-1 overflow-auto space-y-3 pr-2">
+                        {records.length === 0 ? (
+                            <p className="text-sm text-muted-foreground">No records found.</p>
+                        ) : (
+                            records.map((r) => (
+                                <div key={r.id} className="flex items-center gap-3 p-3 rounded-lg border border-border/40 hover:bg-white/50 transition-colors">
+                                    <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${r.uploaded_by === 'doctor' ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'}`}>
+                                        <FileText className="h-5 w-5" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <h4 className="font-medium text-sm truncate">{r.test_name || r.record_type}</h4>
+                                        <p className="text-xs text-muted-foreground">
+                                            {new Date(r.date).toLocaleDateString()} • {r.uploaded_by === 'doctor' ? 'Uploaded by You' : 'Uploaded by Patient'}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </GlassCard>
+            </div>
+
+            <UploadPatientRecordModal
+                isOpen={isUploadModalOpen}
+                onClose={() => setIsUploadModalOpen(false)}
+                patientId={patient.id}
+            />
+        </div>
+    );
 }

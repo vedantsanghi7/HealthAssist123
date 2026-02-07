@@ -54,16 +54,19 @@ export function Sidebar() {
                     <span className="font-bold text-lg tracking-tight text-medical-primary hidden md:block">HealthAssist</span>
                 </div>
                 {/* Role Badge / Switcher */}
+                {/* Role Badge / Switcher (Hidden per user request for strict segregation) */}
                 <div className="flex flex-col items-end">
                     <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">{role} View</span>
-                    {roles && roles.length > 1 && (
-                        <button
+                    {/* 
+                     {roles && roles.length > 1 && (
+                         <button 
                             onClick={() => switchRole(role === 'patient' ? 'doctor' : 'patient')}
                             className="text-[10px] text-blue-500 hover:underline"
-                        >
-                            Switch to {role === 'patient' ? 'Doctor' : 'Patient'}
-                        </button>
-                    )}
+                         >
+                             Switch to {role === 'patient' ? 'Doctor' : 'Patient'}
+                         </button>
+                     )} 
+                     */}
                 </div>
             </div>
 

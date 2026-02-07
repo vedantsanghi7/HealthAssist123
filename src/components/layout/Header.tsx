@@ -6,22 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase/supabaseClient';
 
 export function Header() {
-    const { user } = useAuth();
-    const [profile, setProfile] = useState<any>(null);
-
-    useEffect(() => {
-        if (!user) return;
-
-        const fetchProfile = async () => {
-            const { data } = await supabase
-                .from('profiles')
-                .select('full_name')
-                .eq('id', user.id)
-                .single();
-            setProfile(data);
-        };
-        fetchProfile();
-    }, [user]);
+    const { user, profile } = useAuth();
 
     const getInitials = (name: string) => {
         return name

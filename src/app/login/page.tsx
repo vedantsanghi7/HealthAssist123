@@ -46,6 +46,10 @@ function LoginForm() {
                     },
                 });
                 if (authError) throw authError;
+
+                // Remember role for when they verify and login
+                localStorage.setItem('last_active_role', role);
+
                 alert('Signup successful! Please check your email for confirmation link.');
             } else {
                 const { error: authError } = await supabase.auth.signInWithPassword({
@@ -53,7 +57,12 @@ function LoginForm() {
                     password,
                 });
                 if (authError) throw authError;
-                router.push('/dashboard');
+
+                // User wants to login as specific role
+                localStorage.setItem('last_active_role', role);
+
+                // Force redirect to specific dashboard
+                router.push(role === 'doctor' ? '/dashboard/doctor' : '/dashboard/patient');
             }
         } catch (err: unknown) {
             if (err instanceof Error) {
